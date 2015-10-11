@@ -125,7 +125,6 @@ TriangleNodeManager.prototype.restart = function(center) {
     this.queue = [0];
     this.triangles = [];
     this.calculatePositions();
-    this.drawTriangles();
 };
 
 TriangleNodeManager.prototype.calculatePositions = function() {
