@@ -9,7 +9,7 @@ Creates a tesselating triangle background for your web page, with rollover highl
 ### With NPM
 
 ```
-npm install --save git://github.com/joestrong/triangle-background.git
+npm install --save triangle-background
 ```
 
 ### Without NPM
