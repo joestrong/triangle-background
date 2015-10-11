@@ -1,0 +1,29 @@
+{
+  "name": "triangle-background",
+  "version": "0.0.0",
+  "description": "",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "triangle-background": "git://github.com/joestrong/triangle-background.git"
+  },
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joestrong/triangle-background.git"
+  },
+  "author": "Joe Strong <joestrong@gmail.com> (https://www.joestrong.co.uk/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joestrong/triangle-background/issues"
+  }
+}
