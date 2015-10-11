@@ -58,4 +58,6 @@ TriangleBackground.prototype.restartTriangles = function() {
     this.nodeManager.restart(center);
 };
 
-new TriangleBackground(document.querySelector('.background'));
+if (typeof module === "object" && typeof module.exports === "object") {
+    module.exports = TriangleBackground;
+}
