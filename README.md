@@ -2,6 +2,8 @@
 
 Creates a tesselating triangle background for your web page, with rollover highlight effect
 
+[Demo](http://joestrong.github.io/triangle-background)
+
 ## Installing
 
 ### With NPM
