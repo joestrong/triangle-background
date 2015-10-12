@@ -6,6 +6,7 @@ function Triangle() {
         y: 0
     };
     this.hoverColour = '#ffffff';
+    this.hasHighlight = false;
 }
 
 Triangle.prototype.getRandomColour = function() {
@@ -33,9 +34,7 @@ Triangle.prototype.draw = function (ctx, mousePosition) {
 };
 
 Triangle.prototype.getColour = function(mousePosition) {
-
     var difference = 0;
-
     // Check if mousePosition has been defined before trying to use it to determine the colour
     if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
 
@@ -43,6 +42,7 @@ Triangle.prototype.getColour = function(mousePosition) {
         difference = difference > 100 ? 100 : difference;
         difference = 100 - difference;
     }
+    this.hasHighlight = difference > 0;
 
     return this.changeColour(this.colour, this.hoverColour, difference);
 };
@@ -194,7 +194,9 @@ TriangleNodeManager.prototype.setMousePosition = function(x, y) {
 
 TriangleNodeManager.prototype.getDrawableTriangles = function() {
     return this.triangles.filter(function(triangle) {
-        return Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150;
+        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150);
+        var isStrayHighlight = !isInPointerRadius && triangle.hasHighlight;
+        return isInPointerRadius || isStrayHighlight;
     }.bind(this));
 };
 
