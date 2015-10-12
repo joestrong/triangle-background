@@ -32,11 +32,11 @@ TriangleNodeManager.prototype.calculatePositions = function() {
         }.bind(this));
         this.triangles = this.triangles.concat(newTriangles);
     }
+    this.drawableTriangles = this.getDrawableTriangles();
 };
 
 TriangleNodeManager.prototype.drawTriangles = function() {
-    this.ctx.clearRect(0, 0, this.bounds.width, this.bounds.height);
-    this.triangles.map(function(triangle) {
+    this.drawableTriangles.map(function(triangle) {
         triangle.draw(this.ctx, { x: this.mouseX, y: this.mouseY });
     }.bind(this));
     window.requestAnimationFrame(this.drawTriangles.bind(this));
@@ -68,4 +68,11 @@ TriangleNodeManager.prototype.findTriangle = function(triangleToFind) {
 TriangleNodeManager.prototype.setMousePosition = function(x, y) {
     this.mouseX = x;
     this.mouseY = y;
+    this.drawableTriangles = this.getDrawableTriangles();
+};
+
+TriangleNodeManager.prototype.getDrawableTriangles = function() {
+    return this.triangles.filter(function(triangle) {
+        return Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150;
+    }.bind(this));
 };
