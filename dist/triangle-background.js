@@ -125,7 +125,9 @@ function TriangleNodeManager(center, triangleSize, ctx, bounds) {
     this.ctx = ctx;
     this.bounds = bounds;
     this.calculatePositions();
+    this.drawableTriangles = this.triangles;
     this.drawTriangles();
+    this.drawableTriangles = [];
 }
 
 TriangleNodeManager.prototype.restart = function(center) {
@@ -133,6 +135,7 @@ TriangleNodeManager.prototype.restart = function(center) {
     this.queue = [0];
     this.triangles = [];
     this.calculatePositions();
+    this.drawableTriangles = this.triangles;
 };
 
 TriangleNodeManager.prototype.calculatePositions = function() {
@@ -151,7 +154,6 @@ TriangleNodeManager.prototype.calculatePositions = function() {
         }.bind(this));
         this.triangles = this.triangles.concat(newTriangles);
     }
-    this.drawableTriangles = this.getDrawableTriangles();
 };
 
 TriangleNodeManager.prototype.drawTriangles = function() {
@@ -192,7 +194,7 @@ TriangleNodeManager.prototype.setMousePosition = function(x, y) {
 
 TriangleNodeManager.prototype.getDrawableTriangles = function() {
     return this.triangles.filter(function(triangle) {
-        return Math.abs(triangle.center.x - this.mouseX) < 100 && Math.abs(triangle.center.y - this.mouseY) < 100;
+        return Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150;
     }.bind(this));
 };
 
