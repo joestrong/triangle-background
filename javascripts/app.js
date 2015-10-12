@@ -39,9 +39,17 @@ Triangle.prototype.draw = function (ctx, mousePosition) {
 };
 
 Triangle.prototype.getColour = function(mousePosition) {
-    var difference = this.getMouseDistance(this.center, mousePosition);
-    difference = difference > 100 ? 100 : difference;
-    difference = 100 - difference;
+
+    var difference = 0;
+
+    // Check if mousePosition has been defined before trying to use it to determine the colour
+    if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
+
+        difference = this.getMouseDistance(this.center, mousePosition);
+        difference = difference > 100 ? 100 : difference;
+        difference = 100 - difference;
+    }
+
     return this.changeColour(this.colour, this.hoverColour, difference);
 };
 
