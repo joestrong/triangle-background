@@ -6,6 +6,7 @@ function Triangle() {
         y: 0
     };
     this.hoverColour = '#ffffff';
+    this.hasHighlight = false;
 }
 
 Triangle.prototype.getRandomColour = function() {
@@ -33,9 +34,7 @@ Triangle.prototype.draw = function (ctx, mousePosition) {
 };
 
 Triangle.prototype.getColour = function(mousePosition) {
-
     var difference = 0;
-
     // Check if mousePosition has been defined before trying to use it to determine the colour
     if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
 
@@ -43,6 +42,7 @@ Triangle.prototype.getColour = function(mousePosition) {
         difference = difference > 100 ? 100 : difference;
         difference = 100 - difference;
     }
+    this.hasHighlight = difference > 0;
 
     return this.changeColour(this.colour, this.hoverColour, difference);
 };
