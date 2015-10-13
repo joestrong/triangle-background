@@ -13,7 +13,7 @@ TriangleBackground.prototype.initFrame = function() {
     this.canvasElement = document.createElement('canvas');
     this.drawingContext = this.canvasElement.getContext("2d");
     this.containerElement.appendChild(this.canvasElement);
-    this.containerElement.style.position = "absolute";
+    this.containerElement.style.position = "fixed";
     this.containerElement.style.width = "100%";
     this.containerElement.style.height = "100%";
     this.calculateSize();
