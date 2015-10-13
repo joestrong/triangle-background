@@ -6,14 +6,14 @@ function TriangleBackground(element) {
     this.initFrame();
     this.initTriangles();
     window.addEventListener('resize', this.resize.bind(this));
-    window.addEventListener('mousemove', this.mouseMove.bind(this));
+    this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
 }
 
 TriangleBackground.prototype.initFrame = function() {
     this.canvasElement = document.createElement('canvas');
     this.drawingContext = this.canvasElement.getContext("2d");
     this.containerElement.appendChild(this.canvasElement);
-    this.containerElement.style.position = "absolute";
+    this.containerElement.style.position = "fixed";
     this.containerElement.style.width = "100%";
     this.containerElement.style.height = "100%";
     this.calculateSize();
@@ -33,7 +33,7 @@ TriangleBackground.prototype.resize = function() {
 
 TriangleBackground.prototype.mouseMove = function(event) {
     if (this.nodeManager) {
-        this.nodeManager.setMousePosition(event.clientX, event.clientY);
+        this.nodeManager.setMousePosition(event.offsetX, event.offsetY);
     }
 };
 
