@@ -12,6 +12,7 @@ function Triangle() {
         y: 0
     };
     this.hoverColour = '#ffffff';
+    this.hasHighlight = false;
 }
 
 Triangle.prototype.getRandomColour = function() {
@@ -39,9 +40,7 @@ Triangle.prototype.draw = function (ctx, mousePosition) {
 };
 
 Triangle.prototype.getColour = function(mousePosition) {
-
     var difference = 0;
-
     // Check if mousePosition has been defined before trying to use it to determine the colour
     if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
 
@@ -49,6 +48,7 @@ Triangle.prototype.getColour = function(mousePosition) {
         difference = difference > 100 ? 100 : difference;
         difference = 100 - difference;
     }
+    this.hasHighlight = difference > 0;
 
     return this.changeColour(this.colour, this.hoverColour, difference);
 };
@@ -131,7 +131,9 @@ function TriangleNodeManager(center, triangleSize, ctx, bounds) {
     this.ctx = ctx;
     this.bounds = bounds;
     this.calculatePositions();
+    this.drawableTriangles = this.triangles;
     this.drawTriangles();
+    this.drawableTriangles = [];
 }
 
 TriangleNodeManager.prototype.restart = function(center) {
@@ -139,6 +141,7 @@ TriangleNodeManager.prototype.restart = function(center) {
     this.queue = [0];
     this.triangles = [];
     this.calculatePositions();
+    this.drawableTriangles = this.triangles;
 };
 
 TriangleNodeManager.prototype.calculatePositions = function() {
@@ -152,7 +155,7 @@ TriangleNodeManager.prototype.calculatePositions = function() {
                 this.queue.push(this.nodes.indexOf(newNode));
             }
         }.bind(this));
-        newTriangles.filter(function(newTriangle) {
+        newTriangles = newTriangles.filter(function(newTriangle) {
             return !this.findTriangle(newTriangle);
         }.bind(this));
         this.triangles = this.triangles.concat(newTriangles);
@@ -160,8 +163,7 @@ TriangleNodeManager.prototype.calculatePositions = function() {
 };
 
 TriangleNodeManager.prototype.drawTriangles = function() {
-    this.ctx.clearRect(0, 0, this.bounds.width, this.bounds.height);
-    this.triangles.map(function(triangle) {
+    this.drawableTriangles.map(function(triangle) {
         triangle.draw(this.ctx, { x: this.mouseX, y: this.mouseY });
     }.bind(this));
     window.requestAnimationFrame(this.drawTriangles.bind(this));
@@ -193,6 +195,15 @@ TriangleNodeManager.prototype.findTriangle = function(triangleToFind) {
 TriangleNodeManager.prototype.setMousePosition = function(x, y) {
     this.mouseX = x;
     this.mouseY = y;
+    this.drawableTriangles = this.getDrawableTriangles();
+};
+
+TriangleNodeManager.prototype.getDrawableTriangles = function() {
+    return this.triangles.filter(function(triangle) {
+        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150);
+        var isStrayHighlight = !isInPointerRadius && triangle.hasHighlight;
+        return isInPointerRadius || isStrayHighlight;
+    }.bind(this));
 };
 
 "use strict";
@@ -203,14 +214,14 @@ function TriangleBackground(element) {
     this.initFrame();
     this.initTriangles();
     window.addEventListener('resize', this.resize.bind(this));
-    window.addEventListener('mousemove', this.mouseMove.bind(this));
+    this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
 }
 
 TriangleBackground.prototype.initFrame = function() {
     this.canvasElement = document.createElement('canvas');
     this.drawingContext = this.canvasElement.getContext("2d");
     this.containerElement.appendChild(this.canvasElement);
-    this.containerElement.style.position = "absolute";
+    this.containerElement.style.position = "fixed";
     this.containerElement.style.width = "100%";
     this.containerElement.style.height = "100%";
     this.calculateSize();
@@ -230,7 +241,7 @@ TriangleBackground.prototype.resize = function() {
 
 TriangleBackground.prototype.mouseMove = function(event) {
     if (this.nodeManager) {
-        this.nodeManager.setMousePosition(event.clientX, event.clientY);
+        this.nodeManager.setMousePosition(event.offsetX, event.offsetY);
     }
 };
 
