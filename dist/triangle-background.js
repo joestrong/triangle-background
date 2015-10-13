@@ -149,7 +149,7 @@ TriangleNodeManager.prototype.calculatePositions = function() {
                 this.queue.push(this.nodes.indexOf(newNode));
             }
         }.bind(this));
-        newTriangles.filter(function(newTriangle) {
+        newTriangles = newTriangles.filter(function(newTriangle) {
             return !this.findTriangle(newTriangle);
         }.bind(this));
         this.triangles = this.triangles.concat(newTriangles);
