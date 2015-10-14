@@ -18,8 +18,9 @@ Triangle.prototype.getRandomColour = function() {
         '#B0B8E5'
     ];
     function randomBetween(start, end) {
-        return Math.round(Math.random() * end) + start;
+        return Math.round(Math.random() * (end - start)) + start;
     }
+    console.log(randomBetween(3, 5));
     return colours[randomBetween(0, colours.length -1)]
 };
 
@@ -76,6 +77,7 @@ Triangle.prototype.hexToRGB = function(hexString) {
 Triangle.prototype.RGBToHex = function (rgb) {
     return '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16);
 };
+
 function TriangleNode(x, y, direction) {
     this.x = x;
     this.y = y;

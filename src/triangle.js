@@ -18,7 +18,7 @@ Triangle.prototype.getRandomColour = function() {
         '#B0B8E5'
     ];
     function randomBetween(start, end) {
-        return Math.round(Math.random() * end) + start;
+        return Math.round(Math.random() * (end - start)) + start;
     }
     return colours[randomBetween(0, colours.length -1)]
 };
