@@ -1,12 +1,16 @@
 "use strict";
 
-function TriangleBackground(element) {
+function TriangleBackground(element, mouseHoverHighlight) {
     this.containerElement = element;
     this.triangleSize = 50;
     this.initFrame();
     this.initTriangles();
     window.addEventListener('resize', this.resize.bind(this));
-    this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+
+    // Check if the mouse-over highlight effect should be enabled
+    if(mouseHoverHighlight !== false) {
+        this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+    }
 }
 
 TriangleBackground.prototype.initFrame = function() {
