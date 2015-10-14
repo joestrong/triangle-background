@@ -1,6 +1,6 @@
 # Triangle Background
 
-Creates a tesselating triangle background for your web page, with rollover highlight effect
+Creates a tessellating triangle background for your web page, with rollover highlight effect
 
 [Demo](http://joestrong.github.io/triangle-background)
 
@@ -8,19 +8,19 @@ Creates a tesselating triangle background for your web page, with rollover highl
 
 ### With NPM
 
-```
+```Shell
 npm install --save triangle-background
 ```
 
 ### Without NPM
 
-Download and extract latest zip file into your project: https://github.com/joestrong/triangle-background/releases
+Download and extract the latest zip file into your project: https://github.com/joestrong/triangle-background/releases
 
 ## Getting Started
 
 ### With Browserify
 
-```
+```JavaScript
 var TriangleBackground = require('triangle-background');
 
 new TriangleBackground(document.getElementById('background'));
@@ -28,7 +28,7 @@ new TriangleBackground(document.getElementById('background'));
 
 ### Without Browserify
 
-```
+```HTML
 <!doctype html>
 <html>
 <body>
@@ -43,9 +43,9 @@ new TriangleBackground(document.getElementById('background'));
 
 ## Usage
 
-```
+```JavaScript
 new TriangleBackground(
-    containerElement    // Some dom element
+    containerElement    // Some DOM element
 );
 ```
 
