@@ -8,7 +8,7 @@ Creates a tessellating triangle background for your web page, with rollover high
 
 ### With NPM
 
-```
+```Shell
 npm install --save triangle-background
 ```
 
@@ -20,7 +20,7 @@ Download and extract the latest zip file into your project: https://github.com/j
 
 ### With Browserify
 
-```
+```JavaScript
 var TriangleBackground = require('triangle-background');
 
 new TriangleBackground(document.getElementById('background'));
@@ -28,7 +28,7 @@ new TriangleBackground(document.getElementById('background'));
 
 ### Without Browserify
 
-```
+```HTML
 <!doctype html>
 <html>
 <body>
@@ -43,7 +43,7 @@ new TriangleBackground(document.getElementById('background'));
 
 ## Usage
 
-```
+```JavaScript
 new TriangleBackground(
     containerElement    // Some DOM element
 );
