@@ -20,10 +20,7 @@ TriangleNode.prototype.extrapolateTriangles = function(spacing) {
             this.y + (Math.sin(this.direction) * spacing),
             this.direction
         ));
-        triangle.center = {
-            x: (triangle.nodes[0].x + triangle.nodes[1].x + triangle.nodes[2].x) / 3,
-            y: (triangle.nodes[0].y + triangle.nodes[1].y + triangle.nodes[2].y) / 3
-        };
+        triangle.calculateCenter();
         triangles.push(triangle);
     }
     return triangles;

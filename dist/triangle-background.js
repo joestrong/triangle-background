@@ -20,7 +20,6 @@ Triangle.prototype.getRandomColour = function() {
     function randomBetween(start, end) {
         return Math.round(Math.random() * (end - start)) + start;
     }
-    console.log(randomBetween(3, 5));
     return colours[randomBetween(0, colours.length -1)]
 };
 
@@ -78,6 +77,23 @@ Triangle.prototype.RGBToHex = function (rgb) {
     return '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16);
 };
 
+Triangle.prototype.calculateCenter = function() {
+    var bigX = 0,
+        smallX = 0,
+        bigY = 0,
+        smallY = 0;
+    if (this.nodes) {
+        this.nodes.map(function(node) {
+            bigX = bigX ? Math.max(bigX, node.x) : node.x;
+            bigY = bigY ? Math.max(bigY, node.y) : node.y;
+            smallX = smallX ? Math.min(smallX, node.x) : node.x;
+            smallY = smallY ? Math.min(smallY, node.y) : node.y;
+        });
+        this.center.x = smallX + ((bigX - smallX) / 2);
+        this.center.y = smallY + ((bigY - smallY) / 2);
+    }
+}
+
 function TriangleNode(x, y, direction) {
     this.x = x;
     this.y = y;
@@ -100,10 +116,7 @@ TriangleNode.prototype.extrapolateTriangles = function(spacing) {
             this.y + (Math.sin(this.direction) * spacing),
             this.direction
         ));
-        triangle.center = {
-            x: (triangle.nodes[0].x + triangle.nodes[1].x + triangle.nodes[2].x) / 3,
-            y: (triangle.nodes[0].y + triangle.nodes[1].y + triangle.nodes[2].y) / 3
-        };
+        triangle.calculateCenter();
         triangles.push(triangle);
     }
     return triangles;
