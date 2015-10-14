@@ -45,7 +45,8 @@ new TriangleBackground(document.getElementById('background'));
 
 ```
 new TriangleBackground(
-    containerElement    // Some dom element
+    containerElement,    // Some dom element
+    mouseHoverHighlight  // Add the highlight effect over the cursor, defaults to true
 );
 ```
 
