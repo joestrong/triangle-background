@@ -1,6 +1,6 @@
 {
   "name": "triangle-background",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Creates a web page background of tesselating triangles with hover effect",
   "main": "dist/triangle-background.js",
   "scripts": {
