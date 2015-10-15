@@ -217,8 +217,19 @@ TriangleNodeManager.prototype.getDrawableTriangles = function() {
 
 "use strict";
 
-function TriangleBackground(element) {
-    this.containerElement = element;
+function TriangleBackground(source) {
+    switch(typeof source) {
+	case "string":
+            this.containerElement = document.querySelector(source);
+	    break;
+        case "object":
+	    this.containerElement = source;
+            break;
+        default:
+            console.log("TriangleBackground: First argument should be a CSS selector or a DOM element");
+            return;
+            break;
+    }
     this.triangleSize = 50;
     this.initFrame();
     this.initTriangles();
