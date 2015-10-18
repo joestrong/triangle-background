@@ -8,7 +8,7 @@ Creates a tessellating triangle background for your web page, with rollover high
 
 ```JavaScript
 new TriangleBackground(
-    containerElement,    // Some DOM element
+    containerElement,    // A DOM element, or CSS selector
     options              // Object containing options
 );
 ```
@@ -40,7 +40,7 @@ Download and extract the latest zip file into your project: https://github.com/j
 ```JavaScript
 var TriangleBackground = require('triangle-background');
 
-new TriangleBackground(document.getElementById('background'));
+new TriangleBackground('#background');
 ```
 
 ### Without Browserify
@@ -52,7 +52,7 @@ new TriangleBackground(document.getElementById('background'));
 <div id="background"></div>
 <script src="node_modules/triangle-background/dist/triangle-background.min.js"></script>
 <script>
-    new TriangleBackground(document.getElementById('background'));
+    new TriangleBackground('#background');
 </script>
 </body>
 </html>
@@ -60,4 +60,4 @@ new TriangleBackground(document.getElementById('background'));
 
 ## Notes
 
-As the background DOM element will be given position absolute, other elements will need to be positioned (e.g. relative) to appear above the background.
+As the background DOM element will be given position fixed, other elements will need to be positioned (e.g. relative) to appear above the background.
