@@ -1,7 +1,23 @@
 "use strict";
 
-function TriangleBackground(element) {
-    this.containerElement = element;
+function TriangleBackground(source, options) {
+    switch(typeof source) {
+	case "string":
+            this.containerElement = document.querySelector(source);
+	    break;
+        case "object":
+	    this.containerElement = source;
+            break;
+        default:
+            console.log("TriangleBackground: First argument should be a CSS selector or a DOM element");
+            return;
+            break;
+    }
+    if (options) {
+        if (options.color) {
+            Triangle.prototype.availableColours = options.color;
+        }
+    }
     this.triangleSize = 50;
     this.initFrame();
     this.initTriangles();
