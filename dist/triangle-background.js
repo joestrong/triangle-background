@@ -9,18 +9,18 @@ function Triangle() {
     this.hasHighlight = false;
 }
 
+Triangle.prototype.availableColours = [
+    '#dddddd',
+    '#cccccc',
+    '#bbbbbb',
+    '#aaaaaa',
+];
+
 Triangle.prototype.getRandomColour = function() {
-    var colours = [
-        '#939ABF',
-        '#62667F',
-        '#C4CDFF',
-        '#757B99',
-        '#B0B8E5'
-    ];
     function randomBetween(start, end) {
         return Math.round(Math.random() * (end - start)) + start;
     }
-    return colours[randomBetween(0, colours.length -1)]
+    return this.availableColours[randomBetween(0, this.availableColours.length -1)]
 };
 
 Triangle.prototype.draw = function (ctx, mousePosition) {
@@ -217,7 +217,7 @@ TriangleNodeManager.prototype.getDrawableTriangles = function() {
 
 "use strict";
 
-function TriangleBackground(source) {
+function TriangleBackground(source, options) {
     switch(typeof source) {
 	case "string":
             this.containerElement = document.querySelector(source);
@@ -229,6 +229,9 @@ function TriangleBackground(source) {
             console.log("TriangleBackground: First argument should be a CSS selector or a DOM element");
             return;
             break;
+    }
+    if (options.color) {
+        Triangle.prototype.availableColours = options.color;
     }
     this.triangleSize = 50;
     this.initFrame();
