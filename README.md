@@ -4,6 +4,23 @@ Creates a tessellating triangle background for your web page, with rollover high
 
 [Demo](http://joestrong.github.io/triangle-background)
 
+## Usage
+
+```JavaScript
+new TriangleBackground(
+    containerElement,    // Some DOM element
+    options              // Object containing options
+);
+```
+
+## Option Reference
+
+```
+options: {
+    color: []            // Specify the colours to use for the triangles, must be an array, defaults to a selection of greys
+}
+```
+
 ## Installing
 
 ### With NPM
@@ -39,14 +56,6 @@ new TriangleBackground(document.getElementById('background'));
 </script>
 </body>
 </html>
-```
-
-## Usage
-
-```JavaScript
-new TriangleBackground(
-    containerElement    // Some DOM element
-);
 ```
 
 ## Notes
