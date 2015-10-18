@@ -13,8 +13,10 @@ function TriangleBackground(source, options) {
             return;
             break;
     }
-    if (options.color) {
-        Triangle.prototype.availableColours = options.color;
+    if (options) {
+        if (options.color) {
+            Triangle.prototype.availableColours = options.color;
+        }
     }
     this.triangleSize = 50;
     this.initFrame();

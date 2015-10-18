@@ -13,7 +13,7 @@ Triangle.prototype.availableColours = [
     '#dddddd',
     '#cccccc',
     '#bbbbbb',
-    '#aaaaaa',
+    '#aaaaaa'
 ];
 
 Triangle.prototype.getRandomColour = function() {
