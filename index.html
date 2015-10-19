@@ -38,6 +38,25 @@
 <p>Creates a tesselating triangle background for your web page, with rollover highlight effect</p>
 
 <h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>new TriangleBackground(
+    containerElement,    // A DOM element, or CSS selector
+    options              // Object containing options
+);
+</code></pre>
+
+<h2>
+<a id="option-reference" class="anchor" href="#option-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Option Reference</h2>
+
+<pre><code>
+  options: {
+    color: []            // Specify the colours to use for the triangles, must be an array, defaults to a selection of greys
+}
+</code>
+</code></pre>
+
+<h2>
 <a id="installing" class="anchor" href="#installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing</h2>
 
 <h3>
@@ -59,7 +78,7 @@
 
 <pre><code>var TriangleBackground = require('triangle-background');
 
-new TriangleBackground(document.getElementById('background'));
+new TriangleBackground('#background');
 </code></pre>
 
 <h3>
@@ -71,24 +90,18 @@ new TriangleBackground(document.getElementById('background'));
 &lt;div id="background"&gt;&lt;/div&gt;
 &lt;script src="node_modules/triangle-background/dist/triangle-background.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-    new TriangleBackground(document.getElementById('background'));
+    new TriangleBackground('#background');
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<pre><code>new TriangleBackground(
-    containerElement    // Some dom element
-);
-</code></pre>
 
 <h2>
 <a id="notes" class="anchor" href="#notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notes</h2>
 
-<p>As the background DOM element will be given position absolute, other elements will need to be positioned (e.g. relative) to appear above the background.</p>
+<p>As the background DOM element will be given position fixed, other elements will need to be positioned (e.g. relative) to appear above the background.</p>
         </section>
 
         <footer>
