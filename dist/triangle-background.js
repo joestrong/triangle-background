@@ -13,7 +13,7 @@ Triangle.prototype.availableColours = [
     '#dddddd',
     '#cccccc',
     '#bbbbbb',
-    '#aaaaaa',
+    '#aaaaaa'
 ];
 
 Triangle.prototype.getRandomColour = function() {
@@ -74,7 +74,11 @@ Triangle.prototype.hexToRGB = function(hexString) {
 };
 
 Triangle.prototype.RGBToHex = function (rgb) {
-    return '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16);
+    function componentToHex(component) {
+        var hex = component.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+    }
+    return '#' + componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
 };
 
 Triangle.prototype.calculateCenter = function() {
