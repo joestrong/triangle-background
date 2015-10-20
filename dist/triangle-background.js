@@ -243,7 +243,10 @@ function TriangleBackground(source, options) {
     this.initFrame();
     this.initTriangles();
     window.addEventListener('resize', this.resize.bind(this));
-    this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+
+    if(!options || options.mouseHoverHighlight !== false) {
+        this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+    }
 }
 
 TriangleBackground.prototype.initFrame = function() {
