@@ -5,7 +5,6 @@ function Triangle() {
         x: 0,
         y: 0
     };
-    this.hoverColour = '#ffffff';
     this.hasHighlight = false;
 }
 
@@ -15,6 +14,9 @@ Triangle.prototype.availableColours = [
     '#bbbbbb',
     '#aaaaaa'
 ];
+
+Triangle.prototype.highlightColour = '#ffffff';
+Triangle.prototype.highlightRadius = 100;
 
 Triangle.prototype.getRandomColour = function() {
     function randomBetween(start, end) {
@@ -39,12 +41,12 @@ Triangle.prototype.getColour = function(mousePosition) {
     if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
 
         difference = this.getMouseDistance(this.center, mousePosition);
-        difference = difference > 100 ? 100 : difference;
-        difference = 100 - difference;
+        difference = difference > this.highlightRadius ? this.highlightRadius : difference;
+        difference = this.highlightRadius - difference;
     }
     this.hasHighlight = difference > 0;
 
-    return this.changeColour(this.colour, this.hoverColour, difference);
+    return this.changeColour(this.colour, this.highlightColour, difference);
 };
 
 Triangle.prototype.getMouseDistance = function(position, mousePosition) {
@@ -55,9 +57,9 @@ Triangle.prototype.changeColour = function(startColour, targetColour, blendAmoun
     var startRGB = this.hexToRGB(startColour);
     var targetRGB = this.hexToRGB(targetColour);
     var difference = {
-        r: (targetRGB.r - startRGB.r) * (blendAmount / 100),
-        g: (targetRGB.g - startRGB.g) * (blendAmount / 100),
-        b: (targetRGB.b - startRGB.b) * (blendAmount / 100)
+        r: (targetRGB.r - startRGB.r) * (blendAmount / this.highlightRadius),
+        g: (targetRGB.g - startRGB.g) * (blendAmount / this.highlightRadius),
+        b: (targetRGB.b - startRGB.b) * (blendAmount / this.highlightRadius)
     };
     return this.RGBToHex({
         r: Math.round(startRGB.r + difference.r),
@@ -96,4 +98,4 @@ Triangle.prototype.calculateCenter = function() {
         this.center.x = smallX + ((bigX - smallX) / 2);
         this.center.y = smallY + ((bigY - smallY) / 2);
     }
-}
+};
