@@ -19,7 +19,8 @@ new TriangleBackground(
 options: {
     color: [],                   // Specify the colours to use for the triangles, must be an array of hexadecimal style colours, defaults to a selection of greys
     mouseHoverHighlight: {       // Options for the hover highlight effect, replace with false to disable
-        color: '#ffffff'         // Hover highlight colour (hex format)
+        color: '#ffffff'         // Hover highlight colour in hex format (default '#ffffff')
+        radius: 100              // Hover highlight radius (default 100)
     }
 }
 ```

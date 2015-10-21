@@ -75,7 +75,7 @@ TriangleNodeManager.prototype.setMousePosition = function(x, y) {
 
 TriangleNodeManager.prototype.getDrawableTriangles = function() {
     return this.triangles.filter(function(triangle) {
-        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150);
+        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < Triangle.prototype.highlightRadius && Math.abs(triangle.center.y - this.mouseY) < Triangle.prototype.highlightRadius);
         var isStrayHighlight = !isInPointerRadius && triangle.hasHighlight;
         return isInPointerRadius || isStrayHighlight;
     }.bind(this));
