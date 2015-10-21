@@ -5,7 +5,6 @@ function Triangle() {
         x: 0,
         y: 0
     };
-    this.hoverColour = '#ffffff';
     this.hasHighlight = false;
 }
 
@@ -15,6 +14,8 @@ Triangle.prototype.availableColours = [
     '#bbbbbb',
     '#aaaaaa'
 ];
+
+Triangle.prototype.highlightColour = '#ffffff';
 
 Triangle.prototype.getRandomColour = function() {
     function randomBetween(start, end) {
@@ -44,7 +45,7 @@ Triangle.prototype.getColour = function(mousePosition) {
     }
     this.hasHighlight = difference > 0;
 
-    return this.changeColour(this.colour, this.hoverColour, difference);
+    return this.changeColour(this.colour, this.highlightColour, difference);
 };
 
 Triangle.prototype.getMouseDistance = function(position, mousePosition) {
@@ -96,4 +97,4 @@ Triangle.prototype.calculateCenter = function() {
         this.center.x = smallX + ((bigX - smallX) / 2);
         this.center.y = smallY + ((bigY - smallY) / 2);
     }
-}
+};

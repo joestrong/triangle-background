@@ -17,6 +17,11 @@ function TriangleBackground(source, options) {
         if (options.color) {
             Triangle.prototype.availableColours = options.color;
         }
+        if (options.mouseHoverHighlight) {
+            if (options.mouseHoverHighlight.color) {
+                Triangle.prototype.highlightColour = options.mouseHoverHighlight.color;
+            }
+        }
     }
     this.triangleSize = 50;
     this.initFrame();
