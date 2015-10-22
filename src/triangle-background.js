@@ -32,7 +32,7 @@ function TriangleBackground(source, options) {
     window.addEventListener('resize', this.resize.bind(this));
 
     if(!options || options.mouseHoverHighlight !== false) {
-        this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+        window.addEventListener('mousemove', this.mouseMove.bind(this));
     }
 }
 
@@ -60,7 +60,7 @@ TriangleBackground.prototype.resize = function() {
 
 TriangleBackground.prototype.mouseMove = function(event) {
     if (this.nodeManager) {
-        this.nodeManager.setMousePosition(event.offsetX, event.offsetY);
+        this.nodeManager.setMousePosition(event.clientX, event.clientY);
     }
 };
 
