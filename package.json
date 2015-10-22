@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "triangle-background": "git://github.com/joestrong/triangle-background.git"
+    "triangle-background": "0.2.*"
   },
   "devDependencies": {
     "browserify": "^11.2.0",

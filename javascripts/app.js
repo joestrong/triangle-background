@@ -1,7 +1,19 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var TriangleBackground = require('triangle-background');
 
-new TriangleBackground(document.getElementById('background'));
+new TriangleBackground('#background', {
+    color: [
+        '#939ABF',
+        '#62667F',
+        '#C4CDFF',
+        '#757B99',
+        '#B0B8E5'
+    ],
+    mouseHoverHighlight: {
+        color: '#ffffff',
+        radius: 200
+    }
+});
 
 },{"triangle-background":2}],2:[function(require,module,exports){
 function Triangle() {
@@ -11,22 +23,24 @@ function Triangle() {
         x: 0,
         y: 0
     };
-    this.hoverColour = '#ffffff';
     this.hasHighlight = false;
 }
 
+Triangle.prototype.availableColours = [
+    '#dddddd',
+    '#cccccc',
+    '#bbbbbb',
+    '#aaaaaa'
+];
+
+Triangle.prototype.highlightColour = '#ffffff';
+Triangle.prototype.highlightRadius = 100;
+
 Triangle.prototype.getRandomColour = function() {
-    var colours = [
-        '#939ABF',
-        '#62667F',
-        '#C4CDFF',
-        '#757B99',
-        '#B0B8E5'
-    ];
     function randomBetween(start, end) {
-        return Math.round(Math.random() * end) + start;
+        return Math.round(Math.random() * (end - start)) + start;
     }
-    return colours[randomBetween(0, colours.length -1)]
+    return this.availableColours[randomBetween(0, this.availableColours.length -1)]
 };
 
 Triangle.prototype.draw = function (ctx, mousePosition) {
@@ -45,12 +59,12 @@ Triangle.prototype.getColour = function(mousePosition) {
     if (typeof mousePosition.x !== 'undefined' && typeof mousePosition.y !== 'undefined') {
 
         difference = this.getMouseDistance(this.center, mousePosition);
-        difference = difference > 100 ? 100 : difference;
-        difference = 100 - difference;
+        difference = difference > this.highlightRadius ? this.highlightRadius : difference;
+        difference = this.highlightRadius - difference;
     }
     this.hasHighlight = difference > 0;
 
-    return this.changeColour(this.colour, this.hoverColour, difference);
+    return this.changeColour(this.colour, this.highlightColour, difference);
 };
 
 Triangle.prototype.getMouseDistance = function(position, mousePosition) {
@@ -61,9 +75,9 @@ Triangle.prototype.changeColour = function(startColour, targetColour, blendAmoun
     var startRGB = this.hexToRGB(startColour);
     var targetRGB = this.hexToRGB(targetColour);
     var difference = {
-        r: (targetRGB.r - startRGB.r) * (blendAmount / 100),
-        g: (targetRGB.g - startRGB.g) * (blendAmount / 100),
-        b: (targetRGB.b - startRGB.b) * (blendAmount / 100)
+        r: (targetRGB.r - startRGB.r) * (blendAmount / this.highlightRadius),
+        g: (targetRGB.g - startRGB.g) * (blendAmount / this.highlightRadius),
+        b: (targetRGB.b - startRGB.b) * (blendAmount / this.highlightRadius)
     };
     return this.RGBToHex({
         r: Math.round(startRGB.r + difference.r),
@@ -80,8 +94,30 @@ Triangle.prototype.hexToRGB = function(hexString) {
 };
 
 Triangle.prototype.RGBToHex = function (rgb) {
-    return '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16);
+    function componentToHex(component) {
+        var hex = component.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+    }
+    return '#' + componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
 };
+
+Triangle.prototype.calculateCenter = function() {
+    var bigX = 0,
+        smallX = 0,
+        bigY = 0,
+        smallY = 0;
+    if (this.nodes) {
+        this.nodes.map(function(node) {
+            bigX = bigX ? Math.max(bigX, node.x) : node.x;
+            bigY = bigY ? Math.max(bigY, node.y) : node.y;
+            smallX = smallX ? Math.min(smallX, node.x) : node.x;
+            smallY = smallY ? Math.min(smallY, node.y) : node.y;
+        });
+        this.center.x = smallX + ((bigX - smallX) / 2);
+        this.center.y = smallY + ((bigY - smallY) / 2);
+    }
+};
+
 function TriangleNode(x, y, direction) {
     this.x = x;
     this.y = y;
@@ -104,10 +140,7 @@ TriangleNode.prototype.extrapolateTriangles = function(spacing) {
             this.y + (Math.sin(this.direction) * spacing),
             this.direction
         ));
-        triangle.center = {
-            x: (triangle.nodes[0].x + triangle.nodes[1].x + triangle.nodes[2].x) / 3,
-            y: (triangle.nodes[0].y + triangle.nodes[1].y + triangle.nodes[2].y) / 3
-        };
+        triangle.calculateCenter();
         triangles.push(triangle);
     }
     return triangles;
@@ -200,7 +233,7 @@ TriangleNodeManager.prototype.setMousePosition = function(x, y) {
 
 TriangleNodeManager.prototype.getDrawableTriangles = function() {
     return this.triangles.filter(function(triangle) {
-        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < 150 && Math.abs(triangle.center.y - this.mouseY) < 150);
+        var isInPointerRadius = (Math.abs(triangle.center.x - this.mouseX) < Triangle.prototype.highlightRadius && Math.abs(triangle.center.y - this.mouseY) < Triangle.prototype.highlightRadius);
         var isStrayHighlight = !isInPointerRadius && triangle.hasHighlight;
         return isInPointerRadius || isStrayHighlight;
     }.bind(this));
@@ -208,13 +241,40 @@ TriangleNodeManager.prototype.getDrawableTriangles = function() {
 
 "use strict";
 
-function TriangleBackground(element) {
-    this.containerElement = element;
+function TriangleBackground(source, options) {
+    switch(typeof source) {
+	case "string":
+            this.containerElement = document.querySelector(source);
+	    break;
+        case "object":
+	    this.containerElement = source;
+            break;
+        default:
+            console.log("TriangleBackground: First argument should be a CSS selector or a DOM element");
+            return;
+            break;
+    }
+    if (options) {
+        if (options.color) {
+            Triangle.prototype.availableColours = options.color;
+        }
+        if (options.mouseHoverHighlight) {
+            if (options.mouseHoverHighlight.color) {
+                Triangle.prototype.highlightColour = options.mouseHoverHighlight.color;
+            }
+            if (options.mouseHoverHighlight.radius) {
+                Triangle.prototype.highlightRadius = options.mouseHoverHighlight.radius;
+            }
+        }
+    }
     this.triangleSize = 50;
     this.initFrame();
     this.initTriangles();
     window.addEventListener('resize', this.resize.bind(this));
-    this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+
+    if(!options || options.mouseHoverHighlight !== false) {
+        this.containerElement.addEventListener('mousemove', this.mouseMove.bind(this));
+    }
 }
 
 TriangleBackground.prototype.initFrame = function() {
