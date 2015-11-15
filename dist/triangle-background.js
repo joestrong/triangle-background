@@ -1,3 +1,7 @@
+Math.randomBetween = function(start, end) {
+    return Math.round(Math.random() * (end - start)) + start;
+};
+
 function Triangle() {
     this.colour = this.getRandomColour();
     this.nodes = [];
@@ -19,10 +23,7 @@ Triangle.prototype.highlightColour = '#ffffff';
 Triangle.prototype.highlightRadius = 100;
 
 Triangle.prototype.getRandomColour = function() {
-    function randomBetween(start, end) {
-        return Math.round(Math.random() * (end - start)) + start;
-    }
-    return this.availableColours[randomBetween(0, this.availableColours.length -1)]
+    return this.availableColours[Math.randomBetween(0, this.availableColours.length -1)]
 };
 
 Triangle.prototype.draw = function (ctx, mousePosition) {

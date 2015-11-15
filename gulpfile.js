@@ -3,6 +3,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
 var scripts = [
+    'src/helpers.js',
     'src/triangle.js',
     'src/triangle-node.js',
     'src/triangle-node-manager.js',
